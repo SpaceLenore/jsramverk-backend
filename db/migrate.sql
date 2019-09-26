@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS reports (
 );
 
 INSERT INTO reports (week, title, report) VALUES
-(1, "Kmom 01" "JS-Ramverk Me-Sida
+(1, "Kmom 01", "JS-Ramverk Me-Sida
 Detta är min me-sida för kursen jsramverk skriven i VueJS.
 Starta upp sidan
 Börja med att installera node-modules via `npm install`, sedan kan du starta sidan med kommandot `npm run serve`. Då startar den upp en dev-server på port 8080 som standard (om porten är upptagen används 8081).
