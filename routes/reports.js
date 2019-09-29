@@ -3,6 +3,26 @@ const dbHandler     = require('../db/handler');
 const authenticator = require('../src/authenticator');
 const router        = express.Router();
 
+router.get("/", async (req, res, next) => {
+    try {
+        let data = await dbHandler.fetchAll("SELECT week FROM reports;", []);
+        if (data == undefined) {
+            throw("500: DB Error")
+        }
+        res.status(200).json({
+            status: "success",
+            code: 200,
+            msg: "Sent list of weeks in data object",
+            data: data
+        });
+    } catch (e) {
+        res.status(500).json({
+            status: "error",
+            code: 500,
+            msg: "Failed to retrive list of weekly reports"
+        })
+    }
+});
 
 router.get('/week/:id', async (req, res, next) => {
     try {
