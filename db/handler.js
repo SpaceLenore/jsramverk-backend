@@ -1,7 +1,14 @@
 const sqlite3   = require('sqlite3');
 const path      = require('path');
+let db;
 
-const db = new sqlite3.Database(path.resolve(__dirname, 'data.sqlite'));
+// This will not be tested because we do not allow our test case to test production db 
+/* istanbul ignore next */
+if (process.env.NODE_ENV == 'test') {
+    db = new sqlite3.Database(path.resolve(__dirname, 'test.sqlite'));
+} else {
+    db = new sqlite3.Database(path.resolve(__dirname, 'data.sqlite'));
+}
 
 module.exports = {
     fetchOne(statement, params) {
