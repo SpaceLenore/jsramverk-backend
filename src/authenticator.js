@@ -17,7 +17,6 @@ const validateToken = (token) => {
         jwt.verify(token, jwtsecret, (err, decoded) => {
             //check for decode error in jwt
             if (err != null) {
-                console.log(err);
                 resolve(false);
             }
             resolve(true);

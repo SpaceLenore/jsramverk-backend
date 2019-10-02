@@ -45,7 +45,6 @@ router.get('/week/:id', async (req, res, next) => {
 // Require authentication via JWT
 router.use(async (req, res, next) => {
     if (req.headers.authorization) {
-        console.log("is auth'd?", await authenticator.validateToken(req.headers.authorization));
         if (await authenticator.validateToken(req.headers.authorization)) {
             next();
             return true;

@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -n $1 ]; then
     cd db
-    rm $1.sqlite
-    sqlite3 $1.sqlite < migrate.sql
+    $(> $1.sqlite)
+    cat migrate.sql | sqlite3 $1.sqlite
     cd ..
 fi

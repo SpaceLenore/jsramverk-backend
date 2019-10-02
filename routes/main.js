@@ -62,6 +62,7 @@ router.post('/login', async (req, res, next) => {
 
     if (!login.email || !login.password) {
         sendBadRequestError("All fields must be filled in", res);
+        return false;
     }
     try {
         let user = await dbHandler.fetchOne("SELECT email, password FROM users WHERE email = ?", [login.email]);

@@ -9,6 +9,8 @@ const port          = 1337;
 
 app.use(cors());
 
+// Do not log during testing
+/* istanbul ignore next */
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
@@ -46,4 +48,12 @@ app.use((err, req, res, next) => {
 });
 
 // Start up server
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const server = app.listen(port, () => {
+    // Do not log startup in testing
+    /* istanbul ignore next */
+    if (process.env.NODE_ENV !== 'test') {
+        console.log(`Example API listening on port ${port}!`);
+    }
+});
+
+module.exports = server;

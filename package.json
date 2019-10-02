@@ -7,7 +7,7 @@
     "start": "node app.js",
     "watch": "nodemon app.js",
     "production": "NODE_ENV='production' node app.js",
-    "test": "./db/createDB.bash test && NODE_ENV='test' nyc --reporter 'clover' mocha tests/ -x 'tests/'"
+    "test": "./db/createDB.bash test && NODE_ENV='test' JWT_SECRET='testenvsecret' nyc --reporter=html --reporter=clover -x 'tests/' mocha --timeout 10000 --recursive tests/"
   },
   "keywords": [
     "jsramverk",
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "mocha": "^6.2.1",
     "nodemon": "^1.19.2",
     "nyc": "^14.1.1"

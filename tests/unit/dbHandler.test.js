@@ -1,8 +1,7 @@
-const assert = require('chai').assert;
 const expect = require('chai').expect;
-const should = require('chai').should;
 
 const db = require('../../db/handler');
+
 
 describe('Database handler unit testing', () => {
     describe('Testing successful operations', () => {
@@ -12,6 +11,7 @@ describe('Database handler unit testing', () => {
             expect(dbFetchOne.week).to.be.equal(1);
         });
         it('db can fetch multiple rows', async () => {
+            await db.exec('DELETE FROM reports WHERE week > ?', [3])
             let dbFetchAll = await db.fetchAll('SELECT week FROM reports', []);
 
             expect(dbFetchAll).to.be.a('array');
