@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/SpaceLenore/jsramverk-backend.svg?branch=master)](https://travis-ci.org/SpaceLenore/jsramverk-backend)
 [![Code Coverage](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/badges/build.png?b=master)](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/build-status/master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/SpaceLenore/jsramverk-backend/?branch=master)
 # JS-Ramverk API
 This is the backend API for the course JS-Ramverk
