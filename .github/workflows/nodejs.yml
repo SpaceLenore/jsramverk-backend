@@ -17,6 +17,9 @@ jobs:
     - name: npm install
       run: |
         npm install
+    - name: run pretest to make sure we have access to db file
+      run: |
+        npm run pretest
     - name: npm run test
       run: |
         npm run test
