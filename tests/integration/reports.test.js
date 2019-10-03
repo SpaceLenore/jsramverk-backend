@@ -10,45 +10,49 @@ chai.use(chaiHttp);
 
 describe('Report router', () => {
     describe('Success on GET routes', () => {
-        it('200 OK /reports', () => {
+        it('200 OK /reports', (done) => {
             chai.request(server)
             .get('/reports')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(200);
                 expect(res.body.status).to.be.equal('success');
+                done();
             });
         });
-        it('200 OK /reports/week/:id', () => {
+        it('200 OK /reports/week/:id', (done) => {
             chai.request(server)
             .get('/reports/week/1')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(200);
                 expect(res.body.status).to.be.equal('success');
+                done();
             });
         });
     });
     describe('Errors on GET routes', () => {
-        it('404 Not Found /reports/week/:id', () => {
+        it('404 Not Found /reports/week/:id', (done) => {
             chai.request(server)
             .get('/reports/week/999')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(404);
+                done();
             });
         });
-        it('401 Authentication Required on invalid route, caught by authenticator', () => {
+        it('401 Authentication Required on invalid route, caught by authenticator', (done) => {
             chai.request(server)
             .get('/reports/week')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(401);
+                done();
             })
         });
     });
     describe('Success on POST routes', () => {
-        it('201 Created on /reports POST', () => {
+        it('201 Created on /reports POST', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: testenvJWT})
@@ -56,20 +60,22 @@ describe('Report router', () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(201);
+                done();
             });
         });
     });
     describe('Errors on POST routes', () => {
-        it('401 Unauthenticated on authenticated POST /', () => {
+        it('401 Unauthenticated on authenticated POST /', (done) => {
             chai.request(server)
             .post('/reports')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(401);
                 expect(res.body.status).to.be.equal('error');
+                done();
             });
         });
-        it('401 Unauthenticated on authenticated POST with bad JWT /', () => {
+        it('401 Unauthenticated on authenticated POST with bad JWT /', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: 'badjwt'})
@@ -77,18 +83,20 @@ describe('Report router', () => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(401);
                 expect(res.body.status).to.be.equal('error');
+                done();
             });
         });
-        it('400 Invalid post data (no data) on POST /', () => {
+        it('400 Invalid post data (no data) on POST /', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: testenvJWT})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(400);
+                done();
             });
         });
-        it('400 Invalid post data (only week) on POST /', () => {
+        it('400 Invalid post data (only week) on POST /', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: testenvJWT})
@@ -96,9 +104,10 @@ describe('Report router', () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(400);
+                done();
             });
         });
-        it('400 Invalid post data (only week and title) on POST /', () => {
+        it('400 Invalid post data (only week and title) on POST /', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: testenvJWT})
@@ -106,9 +115,10 @@ describe('Report router', () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(400);
+                done();
             });
         });
-        it('500 Inernal Server Error fails to create a new report', () => {
+        it('500 Inernal Server Error fails to create a new report', (done) => {
             chai.request(server)
             .post('/reports')
             .set({Authorization: testenvJWT})
@@ -116,11 +126,12 @@ describe('Report router', () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(500);
+                done();
             });
         });
     });
     describe('Success on PUT requests', () => {
-        it('PUT 201 /reports sucess', () => {
+        it('PUT 201 /reports sucess', (done) => {
             chai.request(server)
             .put('/reports')
             .set({Authorization: testenvJWT})
@@ -128,17 +139,19 @@ describe('Report router', () => {
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(201);
+                done();
             });
         });
     });
     describe('Error on PUT requests', () => {
-        it('PUT 400 /reports invalid data ', () => {
+        it('PUT 400 /reports invalid data ', (done) => {
             chai.request(server)
             .put('/reports')
             .set({Authorization: testenvJWT})
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(400);
+                done();
             });
         });
         // it('PUT 500 /reports invalid report', () => {

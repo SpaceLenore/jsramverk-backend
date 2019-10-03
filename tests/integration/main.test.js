@@ -8,26 +8,28 @@ chai.use(chaiHttp);
 
 describe('Main router', () => {
     describe('Request Information', () => {
-        it('GET 200 OK /', () => {
+        it('GET 200 OK /', (done) => {
             chai.request(server)
             .get('/')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(200);
+                done();
             });
         });
-        it('GET 404 Not Found invalid route', () => {
+        it('GET 404 Not Found invalid route', (done) => {
             chai.request(server)
             .get('/notarealroutethiswillreturn404notfound')
             .end((err, res) => {
                 expect(err).to.be.null;
                 expect(res.status).to.be.equal(404);
+                done();
             });
         });
     });
     describe('Login and Registration', () => {
         describe('Register account', () => {
-            it('200 OK POST /register', () => {
+            it('200 OK POST /register', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -45,47 +47,52 @@ describe('Main router', () => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(200);
                     expect(res.body.status).to.be.equal('success');
+                    done();
                 });
             });
         });
         describe('Fail to register', () => {
-            it('400 Bad Request - missing name', () => {
+            it('400 Bad Request - missing name', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({})
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - missing email', () => {
+            it('400 Bad Request - missing email', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({name: 'Tester'})
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - missing password', () => {
+            it('400 Bad Request - missing password', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({name: 'Tester', email: 'test@test.suite'})
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - missing bithday', () => {
+            it('400 Bad Request - missing bithday', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({name: 'Tester', email: 'test@test.suite', password: 'testpassword'})
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - invalid email, no @', () => {
+            it('400 Bad Request - invalid email, no @', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -102,9 +109,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - invalid email, no .', () => {
+            it('400 Bad Request - invalid email, no .', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -121,9 +129,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - invalid email, too short', () => {
+            it('400 Bad Request - invalid email, too short', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -140,9 +149,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - invalid password, too short', () => {
+            it('400 Bad Request - invalid password, too short', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -159,9 +169,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, too old', () => {
+            it('400 Bad Request - bad birthday, too old', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -178,9 +189,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, too young', () => {
+            it('400 Bad Request - bad birthday, too young', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -197,9 +209,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, month less than 1', () => {
+            it('400 Bad Request - bad birthday, month less than 1', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -216,9 +229,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, month more than 12', () => {
+            it('400 Bad Request - bad birthday, month more than 12', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -235,9 +249,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, day less than 1', () => {
+            it('400 Bad Request - bad birthday, day less than 1', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -254,9 +269,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request - bad birthday, day more than 31', () => {
+            it('400 Bad Request - bad birthday, day more than 31', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -273,9 +289,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('500 Server Error - fail to create user', () => {
+            it('500 Server Error - fail to create user', (done) => {
                 chai.request(server)
                 .post('/register')
                 .send({
@@ -295,11 +312,12 @@ describe('Main router', () => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(500);
                     expect(res.body.status).to.be.equal('error');
+                    done();
                 });
             });
         });
         describe('Login user',  () => {
-            it('Login with created test account', () => {
+            it('Login with created test account', (done) => {
                 chai.request(server)
                 .post('/login')
                 .send({
@@ -310,21 +328,23 @@ describe('Main router', () => {
                     if (!err) {
                         expect(err).to.be.null;
                         expect(res.status).to.be.equal(200);
+                        done();
                     }
                 });
             });
         });
         describe('Fail to login', () => {
-            it('400 Bad Request, no form attributes', () => {
+            it('400 Bad Request, no form attributes', (done) => {
                 chai.request(server)
                 .post('/login')
                 .send({})
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request, no user found', () => {
+            it('400 Bad Request, no user found', (done) => {
                 chai.request(server)
                 .post('/login')
                 .send({
@@ -334,9 +354,10 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
-            it('400 Bad Request, incorrect password', () => {
+            it('400 Bad Request, incorrect password', (done) => {
                 chai.request(server)
                 .post('/login')
                 .send({
@@ -346,6 +367,7 @@ describe('Main router', () => {
                 .end((err, res) => {
                     expect(err).to.be.null;
                     expect(res.status).to.be.equal(400);
+                    done();
                 });
             });
         });
