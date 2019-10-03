@@ -7,21 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node: ['10', '12']
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@master
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@master
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install
-      run: |
-        npm install
-    - name: run pretest to make sure we have access to db file
-      run: |
-        npm run pretest
-    - name: npm run test
-      run: |
-        npm run test
+    - name: log info
+      run: pwd; ls -al;
+    - name: Install npm dependencies
+      run: npm install
+    - name: Run npm test script
+      run: npm run test
       env:
         CI: true
