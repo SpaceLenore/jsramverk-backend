@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app.js');
+const expect = chai.expect
 
 const testenvJWT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3Quc3VpdGUiLCJpYXQiOjE1NzAwMjE4NTJ9.oiLwYAPKMzl0Av00-LIeYdQShQj-MLWH4WjBT-hv8t8';
 
@@ -13,18 +14,18 @@ describe('Report router', () => {
             chai.request(server)
             .get('/reports')
             .end((err, res) => {
-                res.should.have.status(200);
-                res.body.data.should.be.an('array');
-                res.body.status.should.equal('success');
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(200);
+                expect(res.body.status).to.be.equal('success');
             });
         });
         it('200 OK /reports/week/:id', () => {
             chai.request(server)
             .get('/reports/week/1')
             .end((err, res) => {
-                res.should.have.status(200);
-                res.body.status.should.equal('success');
-                res.body.data.should.be.an('object');
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(200);
+                expect(res.body.status).to.be.equal('success');
             });
         });
     });
@@ -33,14 +34,16 @@ describe('Report router', () => {
             chai.request(server)
             .get('/reports/week/999')
             .end((err, res) => {
-                res.should.have.status(404);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(404);
             });
         });
         it('401 Authentication Required on invalid route, caught by authenticator', () => {
             chai.request(server)
             .get('/reports/week')
             .end((err, res) => {
-                res.should.have.status(401);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(401);
             })
         });
     });
@@ -51,7 +54,8 @@ describe('Report router', () => {
             .set({Authorization: testenvJWT})
             .send({week: 998, title: 'title', report: 'report'})
             .end((err, res) => {
-                res.should.have.status(201);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(201);
             });
         });
     });
@@ -60,8 +64,9 @@ describe('Report router', () => {
             chai.request(server)
             .post('/reports')
             .end((err, res) => {
-                res.should.have.status(401);
-                res.body.status.should.be.equal('error');
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(401);
+                expect(res.body.status).to.be.equal('error');
             });
         });
         it('401 Unauthenticated on authenticated POST with bad JWT /', () => {
@@ -69,8 +74,9 @@ describe('Report router', () => {
             .post('/reports')
             .set({Authorization: 'badjwt'})
             .end((err, res) => {
-                res.should.have.status(401);
-                res.body.status.should.be.equal('error');
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(401);
+                expect(res.body.status).to.be.equal('error');
             });
         });
         it('400 Invalid post data (no data) on POST /', () => {
@@ -78,7 +84,8 @@ describe('Report router', () => {
             .post('/reports')
             .set({Authorization: testenvJWT})
             .end((err, res) => {
-                res.should.have.status(400);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(400);
             });
         });
         it('400 Invalid post data (only week) on POST /', () => {
@@ -87,7 +94,8 @@ describe('Report router', () => {
             .set({Authorization: testenvJWT})
             .send({week: 999})
             .end((err, res) => {
-                res.should.have.status(400);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(400);
             });
         });
         it('400 Invalid post data (only week and title) on POST /', () => {
@@ -96,7 +104,8 @@ describe('Report router', () => {
             .set({Authorization: testenvJWT})
             .send({week: 999, title: 'title'})
             .end((err, res) => {
-                res.should.have.status(400);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(400);
             });
         });
         it('500 Inernal Server Error fails to create a new report', () => {
@@ -105,7 +114,8 @@ describe('Report router', () => {
             .set({Authorization: testenvJWT})
             .send({week: 1, title: 'title', report: 'report'})
             .end((err, res) => {
-                res.should.have.status(500);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(500);
             });
         });
     });
@@ -116,7 +126,8 @@ describe('Report router', () => {
             .set({Authorization: testenvJWT})
             .send({week:4, title:'test-title', report:'report text'})
             .end((err, res) => {
-                res.should.have.status(201);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(201);
             });
         });
     });
@@ -126,7 +137,8 @@ describe('Report router', () => {
             .put('/reports')
             .set({Authorization: testenvJWT})
             .end((err, res) => {
-                res.should.have.status(400);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(400);
             });
         });
         // it('PUT 500 /reports invalid report', () => {

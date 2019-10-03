@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app.js');
+const expect = chai.expect
 
 chai.should();
 chai.use(chaiHttp);
@@ -11,14 +12,16 @@ describe('Main router', () => {
             chai.request(server)
             .get('/')
             .end((err, res) => {
-                res.should.have.status(200);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(200);
             });
         });
         it('GET 404 Not Found invalid route', () => {
             chai.request(server)
             .get('/notarealroutethiswillreturn404notfound')
             .end((err, res) => {
-                res.should.have.status(404);
+                expect(err).to.be.null;
+                expect(res.status).to.be.equal(404);
             });
         });
     });
@@ -39,8 +42,9 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(200);
-                    res.body.status.should.be.equal('success');
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(200);
+                    expect(res.body.status).to.be.equal('success');
                 });
             });
         });
@@ -50,7 +54,8 @@ describe('Main router', () => {
                 .post('/register')
                 .send({})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - missing email', () => {
@@ -58,7 +63,8 @@ describe('Main router', () => {
                 .post('/register')
                 .send({name: 'Tester'})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - missing password', () => {
@@ -66,7 +72,8 @@ describe('Main router', () => {
                 .post('/register')
                 .send({name: 'Tester', email: 'test@test.suite'})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - missing bithday', () => {
@@ -74,7 +81,8 @@ describe('Main router', () => {
                 .post('/register')
                 .send({name: 'Tester', email: 'test@test.suite', password: 'testpassword'})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - invalid email, no @', () => {
@@ -92,7 +100,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - invalid email, no .', () => {
@@ -110,7 +119,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - invalid email, too short', () => {
@@ -128,7 +138,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - invalid password, too short', () => {
@@ -146,7 +157,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, too old', () => {
@@ -164,7 +176,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, too young', () => {
@@ -182,7 +195,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, month less than 1', () => {
@@ -200,7 +214,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, month more than 12', () => {
@@ -218,7 +233,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, day less than 1', () => {
@@ -236,7 +252,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request - bad birthday, day more than 31', () => {
@@ -254,7 +271,8 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('500 Server Error - fail to create user', () => {
@@ -274,8 +292,9 @@ describe('Main router', () => {
                     }
                 })
                 .end((err, res) => {
-                    res.should.have.status(500);
-                    res.body.status.should.be.equal('error');
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(500);
+                    expect(res.body.status).to.be.equal('error');
                 });
             });
         });
@@ -289,7 +308,8 @@ describe('Main router', () => {
                 })
                 .end((err, res) => {
                     if (!err) {
-                        res.should.have.status(200);
+                        expect(err).to.be.null;
+                        expect(res.status).to.be.equal(200);
                     }
                 });
             });
@@ -300,7 +320,8 @@ describe('Main router', () => {
                 .post('/login')
                 .send({})
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request, no user found', () => {
@@ -311,7 +332,8 @@ describe('Main router', () => {
                     password: 'not a password'
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
             it('400 Bad Request, incorrect password', () => {
@@ -322,7 +344,8 @@ describe('Main router', () => {
                     password: 'not a password'
                 })
                 .end((err, res) => {
-                    res.should.have.status(400);
+                    expect(err).to.be.null;
+                    expect(res.status).to.be.equal(400);
                 });
             });
         });
